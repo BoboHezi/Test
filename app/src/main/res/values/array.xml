@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="gradient_colors">
+        <item>#aa51d6bc</item>
+        <item>#aa51d6bc</item>
+        <item>#aab578e7</item>
+        <item>#aa29b2ef</item>
+        <item>#aa29b2ef</item>
+    </array>
+
+    <array name="fingerprint_normal_anim">
+    </array>
+
+    <array name="fingerprint_failed_anim">
+    </array>
+
+    <string-array translatable="false" name="supported_locales">
+    </string-array>
+</resources>

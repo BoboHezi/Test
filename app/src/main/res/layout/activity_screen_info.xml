@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/screen_info"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@drawable/text_ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <FrameLayout
+        android:id="@+id/incall_dialpad_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
+
+    <View
+        android:id="@+id/full_area"
+        android:background="#ffffffff"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <View
+        android:id="@+id/usable_area"
+        android:background="#ff000000"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+    <View
+        android:id="@+id/navigation_area"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:background="#068484"/>
+
+</RelativeLayout>

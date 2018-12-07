@@ -1,0 +1,80 @@
+package com.example.zhanbozhang.test;
+
+import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.provider.CallLog;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
+
+import com.example.zhanbozhang.test.widget.MaskNotifyBanner;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author Eli
+ */
+public class TestAODActivity extends AppCompatActivity {
+
+    private static final String TAG = "TestAODActivity";
+
+    private MaskNotifyBanner notifyBanner;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.aod_layout_7);
+
+        notifyBanner = findViewById(R.id.notify_banner);
+
+        TextView dateText = findViewById(R.id.date_view);
+        updateDate(dateText);
+
+        new Handler().postDelayed(() -> {
+            List<Integer> icons = new ArrayList<>();
+
+            icons.add(R.drawable.notification_phone_call);
+            icons.add(R.drawable.notification_qq);
+            icons.add(R.drawable.notification_wechat);
+
+            int[] iconsArray = new int[icons.size()];
+            int index = 0;
+            for (Integer integer : icons) {
+                iconsArray[index] = integer;
+                index ++;
+            }
+
+            notifyBanner.setImageArray(iconsArray);
+        }, 2000);
+
+        new Thread(() -> {
+            Uri smsUri = Uri.parse("content://sms/inbox");
+            Cursor smsCursor = getContentResolver().query(smsUri, null, "type = 1 and read = 0", null, null);
+            smsCursor.moveToFirst();
+            Log.i(TAG, "sms count: " + smsCursor.getCount());
+
+            String where = CallLog.Calls.TYPE + "=" + CallLog.Calls.MISSED_TYPE + " AND " + CallLog.Calls.IS_READ + "=" + 0;
+            @SuppressLint("MissingPermission")
+            Cursor callCursor = getContentResolver().query(CallLog.Calls.CONTENT_URI, null, where, null, null);
+            callCursor.moveToFirst();
+            Log.i(TAG, "call count: " + callCursor.getCount());
+
+        }).start();
+    }
+
+    private void updateDate(TextView dateView) {
+        String dateFormat = "MMMd\'日\' EEE";
+        String dateString = new SimpleDateFormat(dateFormat).format(new Date());
+        dateView.setText(dateString);
+    }
+
+}

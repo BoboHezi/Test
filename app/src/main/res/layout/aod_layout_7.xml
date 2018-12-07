@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <com.example.zhanbozhang.test.widget.GradientLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        apps:angle="360"
+        android:orientation="vertical">
+
+        <com.example.zhanbozhang.test.widget.MaskTextClock
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="60sp"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-thin"
+            android:format12Hour="@string/time_format_12_mode"
+            android:format24Hour="@string/time_format_24_mode"/>
+
+        <com.example.zhanbozhang.test.widget.MaskTextView
+            android:id="@+id/date_view"
+            android:textSize="50px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.example.zhanbozhang.test.widget.BatteryView
+            android:textSize="50px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="#000"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <com.example.zhanbozhang.test.widget.MaskNotifyBanner
+            android:id="@+id/notify_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.example.zhanbozhang.test.widget.GradientLayout>
+</FrameLayout>

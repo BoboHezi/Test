@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaskNotifyBanner">
+        <!-- Image -->
+        <attr name="image" format="reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="GradientLayout">
+        <attr name="showGradient" format="boolean" />
+        <attr name="colors" format="reference" />
+        <attr name="angle" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LockableViewPager">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+</resources>

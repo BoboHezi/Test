@@ -1,0 +1,21 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Test</string>
+    <string name="test_names">SIM <xliff:g id="number">%1$d</xliff:g>(<xliff:g id="net_work">%2$s</xliff:g>)</string>
+    <string name="test_size">values</string>
+    <string name="test1">选择语言</string>
+    <string name="time_format_12_mode">hh&#58;mm</string>
+    <string name="time_format_24_mode">kk&#58;mm</string>
+    <string name="test_locale">default locale</string>
+
+    <fraction name="test_fraction">1300%</fraction>
+
+    <string name="product_battery_title">Product and Battery Information</string>
+    <string name="product_battery_info_title">●Product &amp; Battery Information</string>
+    <string name="product_battery_made_in_china">Made in China</string>
+    <string name="product_battery_warning">WARNING! / ATTENTION !</string>
+    <string name="product_battery_info_p1">Rechargeable Li-Po Battery / Batterie Rechargable Li-Po\nManufacturing / Date de fabrication : May2018\nFor model / Pour le modèle : EXTRA\nBattery Model / Modèle de la batterie : EXT\nStandard Voltage / Tension standard : 3.8V\nCapacity / Capacité : 3300mAh.\nPower / Puissance :12,54 Wh\nMax Charging Voltage / Tension limite : 4.35V\nHEM, 27 Boulevard d’Arras, \n13004, Marseille France\n</string>
+    <string name="product_battery_info_p2">Puissance d’entrée / Input power : 5V 1.0A</string>
+    <string name="product_battery_info_p3">Ne pas mettre en court-circuit. Ne pas jeter dans un feu. Utiliser uniquement avec le chargeur d’origine. Ne pas mettre dans un environnement humide ou corrosif. Veuillez-vous référer au manuel avant d’utiliser la batterie</string>
+    <string name="product_battery_info_p4">Use speciﬁed charger only. May explode if damaged or disposed into ﬁre. Do not short circuit. Do not disassemble. Please refer to manual before using battery.</string>
+
+</resources>
