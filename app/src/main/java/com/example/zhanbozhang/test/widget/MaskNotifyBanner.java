@@ -28,7 +28,7 @@ public class MaskNotifyBanner extends View {
 
     private Paint mPaint;
 
-    private int[] imageArray = new int[]{};
+    private List<Integer> imageArray = new ArrayList<>();
 
     private List<Bitmap> images = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class MaskNotifyBanner extends View {
         }
     }
 
-    public void setImageArray(int[] array) {
+    public void setImageArray(List<Integer> array) {
         imageArray = array;
         images.clear();
         for (int id : imageArray) {
@@ -68,6 +68,7 @@ public class MaskNotifyBanner extends View {
                 images.add(bitmap);
             }
         }
+        requestLayout();
         postInvalidate();
     }
 
@@ -88,14 +89,17 @@ public class MaskNotifyBanner extends View {
             }
         }
         if (heightSpecMode == MeasureSpec.AT_MOST) {
-            Bitmap bitmap = (images.size() > 0) ? images.get(0) : BitmapFactory.decodeResource(getResources(), R.drawable.notification_phone_call);
-            heightSpecSize = bitmap.getHeight();
+            Bitmap bitmap = (images.size() > 0) ? images.get(0) : null;
+            heightSpecSize = bitmap != null ? bitmap.getHeight() : 0;
         }
         setMeasuredDimension(widthSpecSize, heightSpecSize);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (getWidth() <= 0 || getHeight() <= 0) {
+            return;
+        }
         Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
 

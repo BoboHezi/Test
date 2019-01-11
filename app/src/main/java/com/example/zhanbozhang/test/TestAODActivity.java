@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceActivity;
 import android.provider.CallLog;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.zhanbozhang.test.widget.MaskNotifyBanner;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,18 +44,11 @@ public class TestAODActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             List<Integer> icons = new ArrayList<>();
 
-            icons.add(R.drawable.notification_phone_call);
+            icons.add(R.drawable.notification_call);
             icons.add(R.drawable.notification_qq);
             icons.add(R.drawable.notification_wechat);
 
-            int[] iconsArray = new int[icons.size()];
-            int index = 0;
-            for (Integer integer : icons) {
-                iconsArray[index] = integer;
-                index ++;
-            }
-
-            notifyBanner.setImageArray(iconsArray);
+            notifyBanner.setImageArray(icons);
         }, 2000);
 
         new Thread(() -> {

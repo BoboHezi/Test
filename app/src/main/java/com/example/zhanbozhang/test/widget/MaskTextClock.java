@@ -42,7 +42,11 @@ public class MaskTextClock extends TextClock {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(getTextSize());
         mPaint.setTypeface(getTypeface());
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+        } else {
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        }
     }
 
     @Override
