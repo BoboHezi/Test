@@ -5,5 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <bool name="test_bool">true</bool>
 
-    <dimen name="test_dimen">1px</dimen>
+    <dimen name="test_dimen">100dp</dimen>
+
+    <dimen name="status_bar_height">24dp</dimen>
+
+    <color name="colorAnswer">#93009423</color>
+    <color name="colorReject">#93FA4F38</color>
 </resources>

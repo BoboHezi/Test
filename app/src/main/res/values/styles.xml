@@ -10,4 +10,38 @@
         <!--<item name="android:windowFullscreen">true</item>-->
     </style>
 
+    <style name="AnswerTheme" parent="AppTheme">
+        <!--<item name="android:windowBackground">@drawable/incall_background_gradient</item>-->
+        <item name="android:windowShowWallpaper">true</item>
+        <!--<item name="android:layerType">software</item>
+        <item name="android:dither">true</item>-->
+    </style>
+
+    <style name="MmsTheme" parent="@android:style/Theme.Material.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:editTextBackground">@null</item>
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+        <item name="android:actionModeStyle">@style/CustomActionBar</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionModeNoBack</item>
+        <item name="android:homeAsUpIndicator">@drawable/compose_return_button</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:colorAccent">#0A90F3</item>
+        <item name="android:actionBarSize">50dp</item>
+    </style>
+
+    <style name="CustomActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:actionModeBackground">@android:color/transparent</item>
+        <item name="android:displayOptions">disableHome</item>
+    </style>
+
+    <style name="ActionModeNoBack" parent="@android:style/Widget.ActionButton.CloseMode">
+        <item name="android:visibility">gone</item>
+    </style>
+
 </resources>

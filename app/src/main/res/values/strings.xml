@@ -17,5 +17,24 @@
     <string name="product_battery_info_p2">Puissance d’entrée / Input power : 5V 1.0A</string>
     <string name="product_battery_info_p3">Ne pas mettre en court-circuit. Ne pas jeter dans un feu. Utiliser uniquement avec le chargeur d’origine. Ne pas mettre dans un environnement humide ou corrosif. Veuillez-vous référer au manuel avant d’utiliser la batterie</string>
     <string name="product_battery_info_p4">Use speciﬁed charger only. May explode if damaged or disposed into ﬁre. Do not short circuit. Do not disassemble. Please refer to manual before using battery.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="test_rich_text_msg"><font color='red'>样式一</font> <br /></string>
+
+    <array name="test_rich_text_array">
+        <item>
+            <font color='red'>样式一</font>
+            <br />
+        </item>
+        <item>
+            <font color='red'>样式二</font>
+            <br />
+        </item>
+        <item>
+            <font color='red'>样式三</font>
+            <br />
+        </item>
+    </array>
 
 </resources>

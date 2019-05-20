@@ -10,7 +10,9 @@ import android.view.View;
 
 import com.example.zhanbozhang.test.R;
 
-/** {@link ViewPager} useful for disabled swiping between pages. */
+/**
+ * {@link ViewPager} useful for disabled swiping between pages.
+ */
 public class LockableViewPager extends ViewPager {
 
     private boolean swipingLocked;

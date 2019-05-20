@@ -5,85 +5,142 @@
     android:id="@+id/main_layout_eli"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/werr"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fingerprint_view_icon"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:clickable="false"
-        android:visibility="gone"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:id="@+id/fingerprint_view_icon_normal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:clickable="false"
-            android:visibility="visible"
-            android:src="@drawable/finger_normal" />
-
-        <ImageView
-            android:id="@+id/fingerprint_view_icon_press"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:clickable="false"
-            android:visibility="gone"
-            android:src="@drawable/finger_press" />
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/fp_anim"
-        android:clickable="true"
-        android:visibility="visible"
-        android:layout_width="900px"
-        android:layout_height="900px"
-        android:layout_gravity="center"/>
-
     <TextView
-        android:id="@+id/info_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/test1"
-        android:textSize="30sp"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80px"
-        android:textAlignment="center"
-        android:text="@string/test1"
-        android:textSize="30sp"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
-
-    <ProgressBar
+        android:text="Test MSG"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminateTint="#000"
-        android:visibility="gone"/>
+        android:textSize="17sp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:onClick="startActivity"/>
+    <include layout="@layout/activity_message" />
 
-    <EditText
-        android:id="@+id/test_ed"
+    <view
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:gravity="top"/>
+        android:dividerHeight="7dp"
+        class="com.example.zhanbozhang.test.widget.MaskTextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ed_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1px"
+                android:text="Bluetooth" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ed_wifi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1px"
+                android:text="HotSpot" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--    <FrameLayout
+            android:id="@+id/fingerprint_view_icon"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:clickable="false"
+            android:visibility="gone"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/fingerprint_view_icon_normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:clickable="false"
+                android:visibility="visible"
+                android:src="@drawable/finger_normal" />
+
+            <ImageView
+                android:id="@+id/fingerprint_view_icon_press"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:clickable="false"
+                android:visibility="gone"
+                android:src="@drawable/finger_press" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/fp_anim"
+            android:clickable="true"
+            android:visibility="visible"
+            android:layout_width="900px"
+            android:layout_height="900px"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/test1"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80px"
+            android:textAlignment="center"
+            android:text="@string/test1"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="#000"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:onClick="startActivity"/>
+
+        <EditText
+            android:id="@+id/test_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="top"/>-->
 
 </FrameLayout>

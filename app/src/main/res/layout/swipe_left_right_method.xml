@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/answer_gradient"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:id="@+id/incoming_swipe_to_answer_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:accessibilityLiveRegion="polite"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/incoming_will_disconnect_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="116dp"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:alpha="1" />
+
+        <FrameLayout
+            android:id="@+id/incoming_call_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="80dp"
+            android:layout_marginHorizontal="40dp"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <com.example.zhanbozhang.test.answer.HintProgress
+                android:id="@+id/incoming_call_progress"
+                android:layout_width="match_parent"
+                android:layout_height="66dp" />
+
+            <FrameLayout
+                android:id="@+id/incoming_call_reject"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_gravity="left">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:rotation="135"
+                    android:src="@drawable/call_reject" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/incoming_call_answer"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_gravity="right">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:rotation="-45"
+                    android:src="@drawable/call_answer" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/incoming_call_puck_container"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/incoming_call_puck_bg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/incall_answer_bottom"
+                    android:contentDescription="@null"
+                    android:duplicateParentState="true"
+                    android:elevation="8dp"
+                    android:focusable="false"
+                    android:stateListAnimator="@animator/activated_button_elevation" />
+
+                <ImageView
+                    android:id="@+id/incoming_call_puck_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:duplicateParentState="true"
+                    android:elevation="16dp"
+                    android:focusable="false"
+                    android:outlineProvider="none"
+                    android:src="@drawable/incall_phone_icon"
+                    android:tintMode="src_atop"
+                    tools:outlineProvider="background" />
+            </FrameLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

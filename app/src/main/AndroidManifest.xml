@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.zhanbozhang.test">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.MODIFY_AUDIO_ROUTING"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
     <uses-feature android:name="android.hardware.sensor.stepdetector" />
     <uses-feature android:name="android.hardware.sensor.stepcounter" />
 
@@ -21,13 +39,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".TestLayout" android:theme="@style/MmsTheme">
         </activity>
 
-        <activity android:name=".TestLayout">
-        </activity>
+        <activity android:name=".ScreenInfoActivity"></activity>
 
-        <activity android:name=".ScreenInfoActivity">
+        <activity android:name=".answer.AnswerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,12 +56,32 @@
         <activity android:name=".TestAODActivity">
         </activity>
 
+        <activity
+            android:name=".RichTextActivity"
+            android:theme="@style/MmsTheme">
+        </activity>
+
+        <activity android:name=".MessageActivity">
+        </activity>
+
+        <activity android:name=".preference.TestPreferenceActivity"></activity>
+
+        <activity
+            android:name=".GradientActivity"
+            android:theme="@style/AnswerTheme">
+        </activity>
+
+        <activity
+            android:name=".gamemode.GameLauncherActivity"
+            android:excludeFromRecents="true">
+        </activity>
+
         <service
             android:name=".DayDreamServices"
             android:exported="true"
-            android:roundIcon="@mipmap/ic_launcher_round"
             android:label="testDayDream"
-            android:permission="android.permission.BIND_DREAM_SERVICE">
+            android:permission="android.permission.BIND_DREAM_SERVICE"
+            android:roundIcon="@mipmap/ic_launcher_round">
 
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
@@ -55,6 +94,38 @@
         </service>
 
         <service android:name=".acceleration.PhoneStableStateServices" />
+
+        <service android:name=".services.InCallServiceImpl" />
+
+        <receiver android:name=".receiver.SecretCodeReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+
+                <data
+                    android:host="12345"
+                    android:scheme="android_secret_code" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".widget.NewAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
+
+        <receiver android:name=".receiver.MediaButtonReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:authorities="com.android.eli.contacts"
+            android:name=".services.PrivateContactsProvider" />
 
     </application>
 

@@ -305,7 +305,7 @@ public class FingerprintAnimation {
                 try {
                     Thread.sleep(mDuration);
                     mImageView.setImageResource(mFrameRess[currentFrame]);
-                    currentFrame ++;
+                    currentFrame++;
                 } catch (Exception e) {
                 } finally {
                     if (stopFlag || (currentFrame >= mFrameRess.length && !mIsRepeat)) {

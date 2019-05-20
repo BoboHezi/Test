@@ -9,12 +9,14 @@
         <item>#aa29b2ef</item>
     </array>
 
-    <array name="fingerprint_normal_anim">
-    </array>
+    <array name="fingerprint_normal_anim"></array>
 
-    <array name="fingerprint_failed_anim">
-    </array>
+    <array name="fingerprint_failed_anim"></array>
 
-    <string-array translatable="false" name="supported_locales">
-    </string-array>
+    <string-array translatable="false" name="supported_locales"></string-array>
+
+    <integer-array name="config_hide_btns">
+        <item>12</item>
+        <item>18</item>
+    </integer-array>
 </resources>

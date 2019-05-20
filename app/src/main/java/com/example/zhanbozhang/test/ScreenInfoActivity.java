@@ -7,11 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -33,7 +38,7 @@ import java.util.Locale;
 import java.util.Set;
 
 @RequiresApi(api = 28)
-public class ScreenInfoActivity extends AppCompatActivity {
+public class ScreenInfoActivity extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "elifli";
 
@@ -48,6 +53,9 @@ public class ScreenInfoActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private Fragment fragment;
+
+    private Sensor proximitySensor;
+    private PowerManager.WakeLock proximityWakeLock;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +119,10 @@ public class ScreenInfoActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             getCutoutInfo();
         }, 3000);
+
+        proximitySensor = getSystemService(SensorManager.class).getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        getSystemService(SensorManager.class).registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        proximityWakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
     }
 
     private void getCutoutInfo() {
@@ -189,6 +201,16 @@ public class ScreenInfoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.i(TAG, "onSensorChanged: " + event.values);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
     class TestLocale {
         String mId = null;
         String mValue = null;
@@ -203,7 +225,7 @@ public class ScreenInfoActivity extends AppCompatActivity {
             return mId + " : " + mValue;
         }
     }
-    
+
     private class MyQueryHandler extends AsyncQueryHandler {
 
         public MyQueryHandler(ContentResolver cr) {

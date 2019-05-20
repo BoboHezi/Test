@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="webview_license"
-        android:title="werfg">
-    </Preference>
+    <com.example.zhanbozhang.test.widget.CustomSwitchPreference
+        android:key="test_switch"
+        android:title="a switch" />
 
 </PreferenceScreen>

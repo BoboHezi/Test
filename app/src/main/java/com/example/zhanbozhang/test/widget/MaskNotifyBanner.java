@@ -83,7 +83,7 @@ public class MaskNotifyBanner extends View {
         // when width/height mode be wrap_content, redefine size
         if (widthSpecMode == MeasureSpec.AT_MOST) {
             widthSpecSize = 0;
-            for (int i = 0; i < images.size(); i ++) {
+            for (int i = 0; i < images.size(); i++) {
                 Bitmap bitmap = images.get(i);
                 widthSpecSize += (i < images.size() - 1) ? bitmap.getWidth() * 1.3 : bitmap.getWidth();
             }
@@ -109,7 +109,7 @@ public class MaskNotifyBanner extends View {
 
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         int left = 0;
-        for (int i = 0; i < images.size(); i ++) {
+        for (int i = 0; i < images.size(); i++) {
             Bitmap bm = images.get(i);
             c.drawBitmap(bm, left, 0, mPaint);
             left += (i < images.size() - 1) ? bm.getWidth() * 1.3 : bm.getWidth();

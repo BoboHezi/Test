@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,32 +18,37 @@ import android.hardware.TriggerEventListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.CallLog;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.TextView;
 
 import com.example.zhanbozhang.test.acceleration.AccelerationSensorListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "elifli";
-
-    private TextView infoText;
 
     private SensorManager sensorManager;
     private Sensor sensorStepCounter;
@@ -52,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             if (event.values[0] > 0) {
                 Log.i(TAG, "Detected step");
                 stepCountSinceAppLauncher++;
-                infoText.setText("Step Number Since App Launched: " + stepCountSinceAppLauncher);
             }
         }
     };
@@ -61,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             Log.i(TAG, "Sensor: " + event.sensor.getName() + "\tValue: " + event.values[0]);
-            int type =  event.sensor.getType();
+            int type = event.sensor.getType();
             if (type == Sensor.TYPE_STEP_DETECTOR) {
-                stepCountSinceAppLauncher ++;
+                stepCountSinceAppLauncher++;
             } else if (type == Sensor.TYPE_STEP_COUNTER) {
                 stepCountFormSystem = (long) event.values[0];
             }
@@ -73,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                             .append(stepCountSinceAppLauncher)
                             .append("\nStep Number Since System booted: ")
                             .append(stepCountFormSystem);
-            infoText.setText(sb);
         }
 
         @Override
@@ -92,62 +98,114 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        infoText = findViewById(R.id.info_text);
-        infoText.getPaint().setFakeBoldText(true);
-
         sensorListener = AccelerationSensorListener.getInstances(this);
         sensorListener.addMotionListener(listener);
         sensorListener.startMotionListener();
 
-        ViewTreeObserver observer = infoText.getViewTreeObserver();
-        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                Log.i(TAG, "onPreDraw");
-                infoText.getViewTreeObserver().removeOnPreDrawListener(this);
-                return false;
+        findViewById(R.id.btn_bt).setOnClickListener((view) -> {
+            EditText ed = findViewById(R.id.ed_bt);
+            String value = ed.getText().toString();
+            if (!TextUtils.isEmpty(value)) {
+                Settings.System.putString(getContentResolver(), "bluetooth_device_name", value);
             }
         });
 
-        View fingerArea = findViewById(R.id.fingerprint_view_icon);
-        View fingerNormal = findViewById(R.id.fingerprint_view_icon_normal);
-        View fingerPress = findViewById(R.id.fingerprint_view_icon_press);
-
-        fingerArea.setOnTouchListener((view, event) -> {
-
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                fingerNormal.setVisibility(View.GONE);
-                fingerPress.setVisibility(View.VISIBLE);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                fingerPress.setVisibility(View.GONE);
-                fingerNormal.setVisibility(View.VISIBLE);
+        findViewById(R.id.btn_wifi).setOnClickListener((view) -> {
+            EditText ed = findViewById(R.id.ed_wifi);
+            String value = ed.getText().toString();
+            if (!TextUtils.isEmpty(value)) {
+                Settings.System.putString(getContentResolver(), "wifi_device_name", value);
             }
-
-            return false;
         });
 
-        ImageView fpAnimView = findViewById(R.id.fp_anim);
-        FingerprintAnimation animation =
-                new FingerprintAnimation(fpAnimView, FingerprintAnimation.getRes(this, R.array.fingerprint_normal_anim), 50, true);
+        new Thread(this::queryRecordFiles).start();
 
-        fpAnimView.setOnTouchListener((view, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    Log.i(TAG, "ACTION_DOWN");
-                    animation.startAnimation();
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    Log.i(TAG, "ACTION_UP");
-                    animation.stopAnimation();
-                    break;
+        try {
+            PackageManager pm = getPackageManager();
+            ApplicationInfo ai = pm.getApplicationInfo("com.tencent.tmgp.pubgmhdce", 0);
+            if (ai.category == ApplicationInfo.CATEGORY_GAME) {
+                Log.i(TAG, "this is a game");
+            } else {
+                Log.i(TAG, "this is not a game");
             }
-            return false;
-        });
+        } catch (Exception e) {
+            Log.i(TAG, "exception: " + e.toString());
+        }
 
-        new Handler().postDelayed(() -> {
-            animation.setmFrameRess(FingerprintAnimation.getRes(this, R.array.fingerprint_failed_anim));
-        }, 5 * 1000);
+        /*Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
+
+    public void queryRecordFiles() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(MediaStore.Audio.Media.DATA);
+        stringBuilder.append(" LIKE '%");
+        stringBuilder.append("/");
+        stringBuilder.append("Recording");
+        stringBuilder.append("/");
+        stringBuilder.append("%'");
+        stringBuilder.append(" OR ");
+        stringBuilder.append(MediaStore.Audio.Media.DATA);
+        stringBuilder.append(" LIKE '%");
+        stringBuilder.append("/");
+        stringBuilder.append("PhoneRecord");
+        stringBuilder.append("/");
+        stringBuilder.append("%'");
+
+        String selection = stringBuilder.toString();
+        queryFromMediaDB(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, selection, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+    }
+
+    private synchronized void queryFromMediaDB(Uri uri, String selection, String sort) {
+        Cursor cursor = null;
+        try {
+            if (selection == null) {
+                cursor = getContentResolver().query(uri, null, null, null, sort);
+            } else {
+                cursor = getContentResolver().query(uri, null, selection, null, sort);
+            }
+            if (cursor != null) {
+                Log.i(TAG, "queryFromMediaDB: " + cursor.getCount());
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    String data = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+                    String size = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.SIZE));
+                    long sizeL = 0L;
+                    if (!TextUtils.isEmpty(size)) {
+                        sizeL = Long.parseLong(size);
+                    }
+
+                    Log.i(TAG, "data: " + data + "\tsize: " + size + "\tsizeL: " + sizeL);
+                    cursor.moveToNext();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String btName = Settings.System.getString(getContentResolver(), "bluetooth_device_name");
+        String wifiName = Settings.System.getString(getContentResolver(), "wifi_device_name");
+
+        ((EditText) findViewById(R.id.ed_bt)).setText(btName);
+        ((EditText) findViewById(R.id.ed_wifi)).setText(wifiName);
+
+        Drawable drawable = getResources().getDrawable(R.drawable.incall_answer_bottom);
     }
 
     class TestBroadcast extends BroadcastReceiver {
@@ -185,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         public void onPhoneUnstable() {
             Log.i(TAG, "The phone is unstable now");
             runOnUiThread(() -> {
-                infoText.setText("The phone is unstable now");
+
             });
         }
 
@@ -193,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         public void onPhoneStable() {
             Log.i(TAG, "The phone is stable now");
             runOnUiThread(() -> {
-                infoText.setText("The phone is stable now");
+
             });
         }
 
@@ -236,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                     "phone_account_address"/*CallLog.Calls.PHONE_ACCOUNT_ADDRESS*/
             };
             String where = "phone_account_address = ?";
-            String[] selectionArgs = new String[] {
+            String[] selectionArgs = new String[]{
                     "+8613095451128"
             };
 
@@ -245,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.i(TAG, "cursor uri: " + CallLog.Calls.CONTENT_URI.toString());
             if (cursor != null && cursor.getCount() > 0) {
-                for (cursor.moveToFirst(); cursor.isLast() ; cursor.moveToNext()) {
+                for (cursor.moveToFirst(); cursor.isLast(); cursor.moveToNext()) {
                     String name = cursor.getString(0);
                     String number = cursor.getString(1);
                     String type;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <stroke
+                android:width="1px"
+                android:color="#ccc" />
+        </shape>
+    </item>
+    <item>
+        <ripple
+            android:color="@color/colorPrimaryDark"
+            android:radius="200dp" />
+    </item>
+</layer-list>
