@@ -30,6 +30,7 @@ import android.util.Log;
 import com.example.zhanbozhang.test.MessageActivity;
 import com.example.zhanbozhang.test.R;
 import com.example.zhanbozhang.test.receiver.MediaButtonReceiver;
+import com.example.zhanbozhang.test.services.AutoRebootService;
 
 import java.security.Provider;
 import java.util.Currency;
@@ -74,6 +75,8 @@ public class AnswerActivity extends AppCompatActivity implements AnswerMethodHol
         new Handler().postDelayed(() -> {
             stopLockoutTimer();
         }, 1000 * 6);
+
+        startService(new Intent(this, AutoRebootService.class));
     }
 
     private void listProviders() {

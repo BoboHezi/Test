@@ -75,6 +75,10 @@ public class MessageActivity extends Activity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(TEST_HEADSUP_NOTIFY);
         registerReceiver(headsupReceiver, filter);
+
+        findViewById(R.id.creat_noti).setOnClickListener(v -> {
+            createHeadsupNotify(v);
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

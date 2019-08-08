@@ -47,13 +47,13 @@
         <activity android:name=".ScreenInfoActivity"></activity>
 
         <activity android:name=".answer.AnswerActivity">
+        </activity>
+
+        <activity android:name=".TestAODActivity" android:icon="@drawable/wechat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".TestAODActivity">
         </activity>
 
         <activity
@@ -62,7 +62,21 @@
         </activity>
 
         <activity android:name=".MessageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <!--<activity-alias
+            android:name=".AnotherActivity"
+            android:icon="@mipmap/ic_launcher_round"
+            android:targetActivity=".answer.AnswerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>-->
 
         <activity android:name=".preference.TestPreferenceActivity"></activity>
 
@@ -92,6 +106,8 @@
                 android:name="android.service.dreams"
                 android:resource="@xml/dream_config" />
         </service>
+
+        <service android:name=".services.AutoRebootService" />
 
         <service android:name=".acceleration.PhoneStableStateServices" />
 
