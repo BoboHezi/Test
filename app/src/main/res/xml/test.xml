@@ -5,4 +5,9 @@
         android:key="test_switch"
         android:title="a switch" />
 
+    <Preference
+        android:key="test_widget"
+        android:title="qwyeuruu"
+        android:summary="1234567hfifjgfiigmdkkfmfjifjnfikfmjfjnfjfkfklkfkkfrur85867868089293993883" />
+
 </PreferenceScreen>

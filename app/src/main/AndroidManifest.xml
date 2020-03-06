@@ -50,10 +50,6 @@
         </activity>
 
         <activity android:name=".TestAODActivity" android:icon="@drawable/wechat">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -62,10 +58,6 @@
         </activity>
 
         <activity android:name=".MessageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!--<activity-alias
@@ -77,6 +69,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>-->
+
+        <activity android:name=".youxi.YouxiActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".preference.TestPreferenceActivity"></activity>
 
