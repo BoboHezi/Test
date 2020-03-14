@@ -2,12 +2,12 @@ package com.example.zhanbozhang.test.youxi;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.zhanbozhang.test.R;
 
@@ -69,6 +69,21 @@ public class YouxiAdapter extends RecyclerView.Adapter<YouxiAdapter.MyViewHolder
     public int getItemViewType(int position) {
         if (mHeaderView == null) return TYPE_NORMAL;
         return position == 0 ? TYPE_HEADER : TYPE_NORMAL;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return getItemViewType(position) == TYPE_HEADER ? gridLayoutManager.getSpanCount() : 1;
+                }
+            });
+        }
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

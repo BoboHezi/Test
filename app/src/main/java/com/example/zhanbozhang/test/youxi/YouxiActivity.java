@@ -1,22 +1,28 @@
 package com.example.zhanbozhang.test.youxi;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.zhanbozhang.test.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class YouxiActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private YouxiAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,13 +49,43 @@ public class YouxiActivity extends AppCompatActivity {
         datas.add("15hu3");
         datas.add("16yss");
         datas.add("17hu3");
-        YouxiAdapter adapter = new YouxiAdapter(this, datas);
-        View header = LayoutInflater.from(this).inflate(R.layout.banner, null);
-        adapter.setHeaderView(header);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.addItemDecoration(new FourSpacesItemDecoration(dp2px(this, 8.5f),
                 dp2px(this, 10.5f), 2));
+        adapter = new YouxiAdapter(this, datas);
+        View header = LayoutInflater.from(this).inflate(R.layout.banner, null);
+        adapter.setHeaderView(header);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void saveBitmap(Bitmap bitmap, String path) {
+        if (bitmap == null || bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
+            Log.i("", "bitmap: " + bitmap);
+            return;
+        }
+        String savePath;
+        File filePic;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            savePath = path;
+        } else {
+            Log.e("tag", "saveBitmap failure : sdcard not mounted");
+            return;
+        }
+        try {
+            filePic = new File(savePath);
+            if (!filePic.exists()) {
+                filePic.getParentFile().mkdirs();
+                filePic.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            Log.e("tag", "saveBitmap: " + e.getMessage());
+            return;
+        }
     }
 
 

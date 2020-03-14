@@ -70,7 +70,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
         setContentView(R.layout.activity_screen_info);
         infoText = findViewById(R.id.screen_info);
 
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        /*WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
 
         // navigation area
@@ -88,7 +88,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
 
         // app area
         View usableArea = findViewById(R.id.usable_area);
-        usableArea.getLayoutParams().height = usableHeight;
+        usableArea.getLayoutParams().height = usableHeight;*/
 
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
@@ -117,7 +117,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
         registerReceiver(localeReceiver, filter);
 
         new Handler().postDelayed(() -> {
-            getCutoutInfo();
+            //getCutoutInfo();
         }, 3000);
 
         proximitySensor = getSystemService(SensorManager.class).getDefaultSensor(Sensor.TYPE_PROXIMITY);

@@ -39,25 +39,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" android:label="Main"></activity>
 
         <activity android:name=".TestLayout" android:theme="@style/MmsTheme">
         </activity>
 
-        <activity android:name=".ScreenInfoActivity"></activity>
+        <activity android:name=".ScreenInfoActivity" android:label="ScreenInfo"></activity>
 
-        <activity android:name=".answer.AnswerActivity">
+        <activity android:name=".ActivityMenu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
-        <activity android:name=".TestAODActivity" android:icon="@drawable/wechat">
+        <activity android:name=".answer.AnswerActivity" android:label="InCall">
+        </activity>
+
+        <activity android:name=".TestAODActivity" android:icon="@drawable/wechat" android:label="AOD">
         </activity>
 
         <activity
             android:name=".RichTextActivity"
-            android:theme="@style/MmsTheme">
+            android:theme="@style/MmsTheme"
+            android:label="Rich Text">
         </activity>
 
-        <activity android:name=".MessageActivity">
+        <activity android:name=".MessageActivity" android:label="Message">
         </activity>
 
         <!--<activity-alias
@@ -70,23 +78,20 @@
             </intent-filter>
         </activity-alias>-->
 
-        <activity android:name=".youxi.YouxiActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".youxi.YouxiActivity" android:label="Youxi"></activity>
 
-        <activity android:name=".preference.TestPreferenceActivity"></activity>
+        <activity android:name=".preference.TestPreferenceActivity" android:label="Test Preference"></activity>
 
         <activity
             android:name=".GradientActivity"
-            android:theme="@style/AnswerTheme">
+            android:theme="@style/AnswerTheme"
+            android:label="Gradient">
         </activity>
 
         <activity
             android:name=".gamemode.GameLauncherActivity"
-            android:excludeFromRecents="true">
+            android:excludeFromRecents="true"
+            android:label="Game Launcher">
         </activity>
 
         <service
