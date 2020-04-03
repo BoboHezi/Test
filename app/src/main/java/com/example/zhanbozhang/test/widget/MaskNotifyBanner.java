@@ -28,6 +28,10 @@ public class MaskNotifyBanner extends View {
 
     private Paint mPaint;
 
+    private Paint mOriginPaint;
+
+    private int mBaseColor = Color.BLACK;
+
     private List<Integer> imageArray = new ArrayList<>();
 
     private List<Bitmap> images = new ArrayList<>();
@@ -50,6 +54,8 @@ public class MaskNotifyBanner extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+
+        mOriginPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         for (int id : imageArray) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), id);
@@ -105,7 +111,7 @@ public class MaskNotifyBanner extends View {
 
         // draw background (totally dark)
         mPaint.setStyle(Paint.Style.FILL);
-        c.drawColor(Color.argb(255, 0, 0, 0));
+        c.drawColor(mBaseColor);
 
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         int left = 0;
@@ -120,9 +126,9 @@ public class MaskNotifyBanner extends View {
         if (leftOffset > 0) {
             Bitmap fillBitmap = Bitmap.createBitmap(leftOffset, getHeight(), Bitmap.Config.ARGB_8888);
             Canvas fillCanvas = new Canvas(fillBitmap);
-            fillCanvas.drawColor(Color.argb(255, 0, 0, 0));
-            canvas.drawBitmap(fillBitmap, 0, 0, mPaint);
+            fillCanvas.drawColor(mBaseColor);
+            canvas.drawBitmap(fillBitmap, 0, 0, mOriginPaint);
         }
-        canvas.drawBitmap(bitmap, leftOffset, 0, mPaint);
+        canvas.drawBitmap(bitmap, leftOffset, 0, mOriginPaint);
     }
 }

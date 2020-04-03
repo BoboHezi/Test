@@ -23,6 +23,10 @@ public class MaskTextView extends TextView {
 
     private Paint mPaint;
 
+    private Paint mOriginPaint;
+
+    private int mBaseColor = Color.BLACK;
+
     public MaskTextView(Context context) {
         this(context, null);
     }
@@ -42,6 +46,9 @@ public class MaskTextView extends TextView {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(getTextSize());
         mPaint.setTypeface(getTypeface());
+
+        mOriginPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         } else {
@@ -54,7 +61,7 @@ public class MaskTextView extends TextView {
         Bitmap result = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(result);
         // draw background (totally dark)
-        c.drawColor(Color.argb(255, 0, 0, 0));
+        c.drawColor(mBaseColor);
         // draw text
         c.drawText(getText().toString(), 0, getTextSize(), mPaint);
         Log.i(TAG, "draw text: " + getText());
@@ -65,7 +72,7 @@ public class MaskTextView extends TextView {
         if (leftOffset > 0) {
             Bitmap fillBitmap = Bitmap.createBitmap(leftOffset, getHeight(), Bitmap.Config.ARGB_8888);
             Canvas fillCanvas = new Canvas(fillBitmap);
-            fillCanvas.drawColor(Color.argb(255, 0, 0, 0));
+            fillCanvas.drawColor(mBaseColor);
             canvas.drawBitmap(fillBitmap, 0, 0, mPaint);
         }
         canvas.drawBitmap(result, leftOffset, 0, mPaint);

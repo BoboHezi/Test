@@ -28,6 +28,10 @@ public class BatteryView extends View {
 
     private Paint mPaint;
 
+    private Paint mOriginPaint;
+
+    private int mBaseColor = Color.BLACK;
+
     private Context mContext;
 
     // text size for battery percent
@@ -67,6 +71,9 @@ public class BatteryView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setTextSize(mTextSize);
         mPaint.setStyle(Paint.Style.FILL);
+
+        mOriginPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         } else {
@@ -103,7 +110,7 @@ public class BatteryView extends View {
 
         // draw background (totally dark)
         mPaint.setStyle(Paint.Style.FILL);
-        c.drawColor(Color.argb(255, 0, 0, 0));
+        c.drawColor(mBaseColor);
 
         // draw text
         Rect textRect = new Rect();
@@ -140,10 +147,10 @@ public class BatteryView extends View {
         if (leftOffset > 0) {
             Bitmap fillBitmap = Bitmap.createBitmap(leftOffset, getHeight(), Bitmap.Config.ARGB_8888);
             Canvas fillCanvas = new Canvas(fillBitmap);
-            fillCanvas.drawColor(Color.argb(255, 0, 0, 0));
-            canvas.drawBitmap(fillBitmap, 0, 0, mPaint);
+            fillCanvas.drawColor(mBaseColor);
+            canvas.drawBitmap(fillBitmap, 0, 0, mOriginPaint);
         }
-        canvas.drawBitmap(bitmap, leftOffset, 0, mPaint);
+        canvas.drawBitmap(bitmap, leftOffset, 0, mOriginPaint);
     }
 
     BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {

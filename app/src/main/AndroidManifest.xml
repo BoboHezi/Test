@@ -59,6 +59,8 @@
         <activity android:name=".TestAODActivity" android:icon="@drawable/wechat" android:label="AOD">
         </activity>
 
+        <activity android:name=".TestHollowView" android:icon="@drawable/qq" android:label="Hollow" />
+
         <activity
             android:name=".RichTextActivity"
             android:theme="@style/MmsTheme"
@@ -107,7 +109,7 @@
             </intent-filter>
 
             <meta-data
-                android:name="android.service.dreams"
+                android:name="android.service.dream"
                 android:resource="@xml/dream_config" />
         </service>
 
@@ -146,6 +148,14 @@
         <provider
             android:authorities="com.android.eli.contacts"
             android:name=".services.PrivateContactsProvider" />
+
+        <service android:name=".aidl.MyAidlService"
+            android:enabled="true">
+
+            <intent-filter>
+                <action android:name="com.test.aild.service" />
+            </intent-filter>
+        </service>
 
     </application>
 

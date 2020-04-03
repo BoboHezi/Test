@@ -23,6 +23,10 @@ public class MaskTextClock extends TextClock {
 
     private Paint mPaint;
 
+    private Paint mOriginPaint;
+
+    private int mBaseColor = Color.BLACK;
+
     public MaskTextClock(Context context) {
         this(context, null);
     }
@@ -42,6 +46,9 @@ public class MaskTextClock extends TextClock {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(getTextSize());
         mPaint.setTypeface(getTypeface());
+
+        mOriginPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         } else {
@@ -54,7 +61,7 @@ public class MaskTextClock extends TextClock {
         Bitmap result = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(result);
         // draw background (totally dark)
-        c.drawColor(Color.argb(255, 0, 0, 0));
+        c.drawColor(mBaseColor);
 
         float textWidth = mPaint.measureText(getText().toString());
         int left = textWidth > getWidth() ? 0 : (int) ((getWidth() - textWidth) / 2);
@@ -68,9 +75,9 @@ public class MaskTextClock extends TextClock {
         if (leftOffset > 0) {
             Bitmap fillBitmap = Bitmap.createBitmap(leftOffset, getHeight(), Bitmap.Config.ARGB_8888);
             Canvas fillCanvas = new Canvas(fillBitmap);
-            fillCanvas.drawColor(Color.argb(255, 0, 0, 0));
-            canvas.drawBitmap(fillBitmap, 0, 0, mPaint);
+            fillCanvas.drawColor(mBaseColor);
+            canvas.drawBitmap(fillBitmap, 0, 0, mOriginPaint);
         }
-        canvas.drawBitmap(result, 0, 0, mPaint);
+        canvas.drawBitmap(result, 0, 0, mOriginPaint);
     }
 }

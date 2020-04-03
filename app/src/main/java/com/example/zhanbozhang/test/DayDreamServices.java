@@ -3,6 +3,7 @@ package com.example.zhanbozhang.test;
 import android.service.dreams.DreamService;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 
 public class DayDreamServices extends DreamService {
@@ -26,6 +27,13 @@ public class DayDreamServices extends DreamService {
         findViewById(R.id.dream_btn).setOnClickListener(v -> {
             Log.i(TAG, "clicked");
         });
+
+        getWindow().getDecorView().setSystemUiVisibility(0
+                | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
     @Override
