@@ -1,5 +1,6 @@
 package com.example.zhanbozhang.test;
 
+import android.annotation.SuppressLint;
 import android.content.AsyncQueryHandler;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -27,10 +28,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.DisplayCutout;
+import android.view.DisplayInfo;
 import android.view.View;
-import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.example.zhanbozhang.test.utils.Utils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +60,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
     private Sensor proximitySensor;
     private PowerManager.WakeLock proximityWakeLock;
 
+    @SuppressLint("InvalidWakeLockTag")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +121,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
         registerReceiver(localeReceiver, filter);
 
         new Handler().postDelayed(() -> {
-            //getCutoutInfo();
+            getCutoutInfo();
         }, 3000);
 
         proximitySensor = getSystemService(SensorManager.class).getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -126,19 +130,16 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
     }
 
     private void getCutoutInfo() {
-        Log.i(TAG, "getCutoutInfo: ");
-        View decorView = getWindow().getDecorView();
-        WindowInsets insets = decorView.getRootWindowInsets();
-        if (insets != null) {
-            Log.i(TAG, "get cutout");
-            DisplayCutout cutout = insets.getDisplayCutout();
-            if (cutout != null) {
-                Log.d(TAG, "BoundingRects:\t" + cutout.getBoundingRects());
-                Log.d(TAG, "SafeInsetBottom:\t" + cutout.getSafeInsetBottom());
-                Log.d(TAG, "SafeInsetLeft:\t" + cutout.getSafeInsetLeft());
-                Log.d(TAG, "SafeInsetRight:\t" + cutout.getSafeInsetRight());
-                Log.d(TAG, "SafeInsetTop:\t" + cutout.getSafeInsetTop());
-            }
+        final DisplayInfo mInfo = new DisplayInfo();
+        getDisplay().getDisplayInfo(mInfo);
+        DisplayCutout cutout = mInfo.displayCutout;
+
+        if (cutout != null) {
+            Log.d(TAG, "BoundingRects:\t" + cutout.getBoundingRects());
+            Log.d(TAG, "SafeInsetBottom:\t" + cutout.getSafeInsetBottom());
+            Log.d(TAG, "SafeInsetLeft:\t" + cutout.getSafeInsetLeft());
+            Log.d(TAG, "SafeInsetRight:\t" + cutout.getSafeInsetRight());
+            Log.d(TAG, "SafeInsetTop:\t" + cutout.getSafeInsetTop());
         }
     }
 
@@ -278,6 +279,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
         sb.append("\ndensityDpi: " + densityDpi);
         sb.append("\ndp-width: " + (width / density));
         sb.append("\ndp-height: " + (height / density));
+        sb.append("\npoint: " + Utils.getRealScreenSize());
 
         if (infoText != null) {
             infoText.setText(sb);

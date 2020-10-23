@@ -3,20 +3,9 @@ package com.example.zhanbozhang.test.aidl;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.util.Log;
-
-import com.android.internal.widget.ILockSettings;
-import com.android.internal.widget.LockPatternUtils;
-
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-
-import static com.android.internal.widget.LockPatternUtils.SYNTHETIC_PASSWORD_HANDLE_KEY;
 
 public class MyAidlService extends Service {
 
@@ -43,7 +32,7 @@ public class MyAidlService extends Service {
 
         @Override
         public User getUser() throws RemoteException {
-            Log.i(TAG, "getUser pid: ");
+            Log.i(TAG, "server pid: " + Process.myPid() + ", ppid: " + Process.myPpid());
             /*if (true) {
                 throw new RuntimeException("Failed to decrypt blob");
             }*/

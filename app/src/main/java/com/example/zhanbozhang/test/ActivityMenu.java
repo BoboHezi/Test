@@ -21,6 +21,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.zhanbozhang.test.model.Summary;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ActivityMenu extends AppCompatActivity {
 
     private RecyclerView activitiesRv;
@@ -51,6 +57,45 @@ public class ActivityMenu extends AppCompatActivity {
             activitiesRv.setLayoutManager(new LinearLayoutManager(this));
             activitiesRv.setAdapter(new ActivitiesAdapter(this, activities, pm));
             activitiesRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        List<Summary> originList = new ArrayList<>();
+        originList.add(new Summary("CS", 84, "uryhf"));
+        originList.add(new Summary("CS", 84, "dhyehr"));
+        originList.add(new Summary("de", 3, "zhdye"));
+        originList.add(new Summary("de", 1, "djfur"));
+        originList.add(new Summary("CS", 3, "dufjr"));
+        originList.add(new Summary("cs", 4, "atqrw"));
+        originList.add(new Summary("Wa", 54, "djfur"));
+        originList.add(new Summary("Wb", 12, "23eifjg"));
+        originList.add(new Summary("DE", 43, "dhjuejf"));
+        originList.add(new Summary("wA", 12, "fjujf"));
+        originList.add(new Summary("wA", 14, "fjujf"));
+        originList.add(new Summary("w3", 3, "zhdye"));
+        originList.add(new Summary("4r", 1, "djfur"));
+        originList.add(new Summary("CS", 84, "urxhf"));
+        originList.add(new Summary("CS", 84, "uaxhf"));
+        originList.add(new Summary("ty", 4, "没有"));
+        originList.add(new Summary("ty", 4, "到了"));
+        originList.add(new Summary("2w", 3, "dufjr"));
+        originList.add(new Summary("ty", 4, "不会"));
+        originList.add(new Summary("ty", 4, "xes"));
+
+        Log.i("elifli", "origin list: ");
+        for (Summary su : originList) {
+            Log.i("elifli", "" + su);
+        }
+
+        Collections.sort(originList, Summary.COMPARATOR);
+
+        Log.i("elifli", "sorted list: ");
+        for (Summary su : originList) {
+            Log.i("elifli", "" + su);
         }
     }
 
