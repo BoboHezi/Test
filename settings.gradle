@@ -1,1 +1,2 @@
+include ':avocado-util'
 include ':app'

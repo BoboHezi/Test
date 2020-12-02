@@ -12,6 +12,13 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.ImageFormat;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.AudioDeviceCallback;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
@@ -20,6 +27,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.util.Size;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +35,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
+
+import com.android.internal.util.ArrayUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 @TargetApi(Build.VERSION_CODES.O)
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -79,6 +92,42 @@ public class MessageActivity extends Activity {
         findViewById(R.id.creat_noti).setOnClickListener(v -> {
             createHeadsupNotify(v);
         });
+
+        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        CameraCharacteristics characteristics = null;
+        try {
+            characteristics = cameraManager.getCameraCharacteristics("1");
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        StreamConfigurationMap s = characteristics
+                .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+
+        characteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
+
+        List<Size> highSizes = Arrays.asList(s.getHighResolutionOutputSizes(ImageFormat.JPEG));
+        List<Size> sizes = Arrays.asList(s.getOutputSizes(ImageFormat.JPEG));
+        Size[] sizes1 = (Size[]) sizes.toArray();
+
+        Size[] sizes2 = new Size[sizes1.length + 1];
+        System.arraycopy(new Size[]{new Size(1, 2)}, 0, sizes2, 0, 1);
+        System.arraycopy(sizes1, 0, sizes2, 1, sizes1.length);
+
+        int facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+
+        Log.i(TAG, "highSizes: " + highSizes + "\nsizes: " + sizes + "\nfacing: " + facing);
+
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        Sensor gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor lineAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        Sensor unAcce = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED);
+
+        Log.i(TAG, "\nTYPE_GRAVITY: " + gravitySensor +
+                "\nTYPE_ACCELEROMETER: " + accelerometer +
+                "\nTYPE_LINEAR_ACCELERATION: " + lineAccelerometer +
+                "\nTYPE_ACCELEROMETER_UNCALIBRATED: " + unAcce);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

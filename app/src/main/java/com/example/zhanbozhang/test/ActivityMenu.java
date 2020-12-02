@@ -1,5 +1,6 @@
 package com.example.zhanbozhang.test;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,8 +60,20 @@ public class ActivityMenu extends AppCompatActivity {
             activitiesRv.setAdapter(new ActivitiesAdapter(this, activities, pm));
             activitiesRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }
+
+        getRam();
     }
 
+    private int getRam() {
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getMemoryInfo(memInfo);
+        String ram = Formatter.formatFileSize(this, memInfo.totalMem);
+        float v = Float.valueOf(ram.substring(0, ram.indexOf(" GB")));
+        Log.i("elifli", "getRam: " + Math.round(v));
+        return (int) v;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onResume() {
         super.onResume();
@@ -87,16 +101,14 @@ public class ActivityMenu extends AppCompatActivity {
         originList.add(new Summary("ty", 4, "xes"));
 
         Log.i("elifli", "origin list: ");
-        for (Summary su : originList) {
-            Log.i("elifli", "" + su);
-        }
+        originList.forEach(summary -> Log.i("elifli", "" + summary));
+
+        originList.stream().filter(Summary.PREDICATE);
 
         Collections.sort(originList, Summary.COMPARATOR);
 
         Log.i("elifli", "sorted list: ");
-        for (Summary su : originList) {
-            Log.i("elifli", "" + su);
-        }
+        originList.forEach(summary -> Log.i("elifli", "" + summary));
     }
 
     class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ActivityHolder> {

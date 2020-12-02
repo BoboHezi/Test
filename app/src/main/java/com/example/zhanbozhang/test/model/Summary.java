@@ -1,6 +1,7 @@
 package com.example.zhanbozhang.test.model;
 
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class Summary {
 
@@ -47,6 +48,10 @@ public class Summary {
         //-3, -2, -1, 0, 1, 2, 3
 
         return cr;
+    };
+
+    public static final Predicate<Summary> PREDICATE = summary -> {
+        return summary.number > 10;
     };
 
     @Override
