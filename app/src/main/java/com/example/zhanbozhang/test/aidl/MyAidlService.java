@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
+import android.system.Os;
 import android.util.Log;
 
 public class MyAidlService extends Service {
@@ -32,7 +33,7 @@ public class MyAidlService extends Service {
 
         @Override
         public User getUser() throws RemoteException {
-            Log.i(TAG, "server pid: " + Process.myPid() + ", ppid: " + Process.myPpid());
+            Log.i(TAG, "server pid: " + Os.getpid() + ", ppid: " + Os.getppid());
             /*if (true) {
                 throw new RuntimeException("Failed to decrypt blob");
             }*/

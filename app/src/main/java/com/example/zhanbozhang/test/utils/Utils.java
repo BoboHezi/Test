@@ -14,11 +14,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
-import android.view.IWindowManager;
 import android.view.View;
 
 import java.io.BufferedReader;
@@ -123,15 +121,6 @@ public class Utils {
 
     public static Point getRealScreenSize() {
         Point point = new Point();
-        IWindowManager wm = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        if (wm != null) {
-            try {
-                wm.getInitialDisplaySize(Display.DEFAULT_DISPLAY, point);
-            } catch (RemoteException e) {
-                Log.e("elifli", "getRealScreenSize exception :", e);
-            }
-        }
         return point;
     }
 

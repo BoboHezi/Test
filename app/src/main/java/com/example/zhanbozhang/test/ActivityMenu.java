@@ -1,5 +1,6 @@
 package com.example.zhanbozhang.test;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -49,7 +50,8 @@ public class ActivityMenu extends AppCompatActivity {
             ActivityInfo[] activities = new ActivityInfo[pi.activities.length - 1];
             int index = 0;
             for (ActivityInfo ai : pi.activities) {
-                if (!ai.getComponentName().equals(getComponentName())) {
+                ComponentName component = new ComponentName(ai.packageName, ai.name);
+                if (!component.equals(getComponentName())) {
                     activities[index] = ai;
                     index ++;
                 }
@@ -128,11 +130,12 @@ public class ActivityMenu extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ActivityHolder holder, int position) {
             ActivityInfo activityInfo = activities[position];
+            ComponentName component = new ComponentName(activityInfo.packageName, activityInfo.name);
             holder.icon.setImageDrawable(activityInfo.loadIcon(pm));
             holder.label.setText(activityInfo.loadLabel(pm));
-            holder.className.setText(activityInfo.getComponentName().flattenToShortString());
+            holder.className.setText(component.flattenToShortString());
 
-            holder.itemView.setOnClickListener(v -> startActivity(new Intent().setComponent(activityInfo.getComponentName())));
+            holder.itemView.setOnClickListener(v -> startActivity(new Intent().setComponent(component)));
         }
 
         class ActivityHolder extends RecyclerView.ViewHolder {

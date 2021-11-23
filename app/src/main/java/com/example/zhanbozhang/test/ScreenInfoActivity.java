@@ -28,7 +28,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.DisplayCutout;
-import android.view.DisplayInfo;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -130,7 +129,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
     }
 
     private void getCutoutInfo() {
-        final DisplayInfo mInfo = new DisplayInfo();
+        /*final DisplayInfo mInfo = new DisplayInfo();
         getDisplay().getDisplayInfo(mInfo);
         DisplayCutout cutout = mInfo.displayCutout;
 
@@ -140,7 +139,7 @@ public class ScreenInfoActivity extends AppCompatActivity implements SensorEvent
             Log.d(TAG, "SafeInsetLeft:\t" + cutout.getSafeInsetLeft());
             Log.d(TAG, "SafeInsetRight:\t" + cutout.getSafeInsetRight());
             Log.d(TAG, "SafeInsetTop:\t" + cutout.getSafeInsetTop());
-        }
+        }*/
     }
 
     BroadcastReceiver localeReceiver = new BroadcastReceiver() {
